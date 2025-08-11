@@ -1,0 +1,11 @@
+
+venv activator
+
+.\venv\Scripts\activate  # (on Windows PowerShell)
+
+
+main loader
+
+
+uvicorn app.main:app --reload
+
