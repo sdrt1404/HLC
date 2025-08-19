@@ -43,56 +43,79 @@ export default function Layout() {
             </Link> 
             */}
 
-            <div className="relative ">
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded"
-                >
-                    Открыть панель
-                </button>
+     <div className="relative">
+  {/* Кнопка открытия */}
+  <button
+    onClick={() => setIsOpen(!isOpen)}
+    className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold rounded-xl shadow-lg transition-all duration-300"
+  >
+    Открыть панель
+  </button>
 
-                {/* Затемнённый фон */}
-                <div
-                    className={`fixed inset-0 bg-black/50 transition-opacity duration-300 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-                        }`}
-                    onClick={() => setIsOpen(false)}
-                ></div>
+  {/* Затемнённый фон */}
+  <div
+    className={`fixed inset-0 bg-black/40 transition-opacity duration-300 backdrop-blur-md ${
+      isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+    }`}
+    onClick={() => setIsOpen(false)}
+  ></div>
 
-                {/* Выезжающая панель */}
-                <div
-                    className={`fixed top-0 right-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'
-                        }`}
-                >
-                    <div className="p-4 flex flex-col justify-around  gap-[100px]">
-                        <div>
-                            <h2 className="text-lg font-bold">Панель</h2>
+  {/* Выезжающая панель */}
+  <div
+    className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl transform transition-all duration-300 ease-in-out rounded-l-3xl ${
+      isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+    }`}
+  >
+    {/* Шапка панели */}
+    <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 rounded-tl-3xl">
+      <h2 className="text-2xl font-bold">📂 Меню</h2>
+      <p className="text-sm opacity-80">Навигация по сайту</p>
+    </div>
 
+    {/* Контент */}
+    <div className="flex flex-col justify-between h-[calc(100%-88px)] p-6">
+      {/* Верхняя часть */}
+      <div className="space-y-4">
+        {[
+          { path: '/', label: '🏠 Home' },
+          { path: '/debtor', label: '💰 Debtor' },
+          { path: '/crud', label: '🛠 Crud' }
+        ].map((item, idx) => (
+          <Link
+            key={idx}
+            to={item.path}
+            onClick={() => setIsOpen(false)}
+            className="block text-lg font-medium px-4 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-all"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
 
+      {/* Нижняя часть */}
+      <div className="space-y-4">
+        <Link to="/login" onClick={() => setIsOpen(false)}>
+          <Button
+            variant="outlined"
+            size="medium"
+            className="w-full rounded-lg"
+          >
+            Login
+          </Button>
+        </Link>
 
-                            <Link to={'/'}>
-                                <h1 className='font-bold text-[30px]' onClick={()=>setIsOpen(false)}>Home</h1>
-                            </Link>
-
-                            <Link to={'/debtor'}>
-                                <h1 className='font-bold text-[30px]' onClick={()=>setIsOpen(false)}>Debtor</h1>
-                            </Link>
-                            <Link to={'/crud'}>
-                            <h1>Crud</h1>
-                            </Link>
-                        </div>
-
-
-                        <div className='flex flex-col'>
-
-                            <Link to={'/login'}>
-                                <Button variant="outlined" size="medium" onClick={()=>setIsOpen(false)}>   Login </Button>
-                            </Link>
-
-                            <button onClick={() => setIsOpen(false)}  className="mt-4 lg:top-[700px] w-[200px] top-[600px] absolute px-4 py-2 bg-red-500 text-white rounded" >Закрыть  </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <button
+          onClick={() => setIsOpen(false)}
+          className="w-full px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-lg shadow-md transition-all"
+        >
+          Закрыть
+        </button>
+      </div>
+    </div>
+  </div>
+    </div>
+ 
+            
 
 
         </header>

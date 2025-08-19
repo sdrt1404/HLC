@@ -6,6 +6,7 @@ import Debtor from "./pajes/debtor/debtor";
 import ProtectedLayout from "./pajes/layout/protectedLyout";
 import Crud from "./pajes/crud/crud";
 import EditPage from "./pajes/editPage/editpage";
+import AddPage from "./pajes/addPage/addPage";
 
 
 
@@ -24,6 +25,7 @@ export default function App() {
       <Route path="login" element={<Login/>}/>
       <Route path="debtor" element={<Debtor/>}/>
       <Route path="crud" element={<Crud/>}/>
+      <Route path="addPage" element={<AddPage/>}/>
       {/* <Route path="edit/:id" element={<EditPage/>}/> */}
 
 <Route path="/edit/:id" element={<EditPage />} />

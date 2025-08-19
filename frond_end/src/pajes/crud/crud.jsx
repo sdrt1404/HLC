@@ -10,31 +10,23 @@ import { Link } from "react-router-dom";
 export default function Crud() {
 
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    let [inpAddName, setInpAddName] = useState("")
-    let [inpAddAge, setInpAddAge] = useState("")
-    let [inpAddAvatar, setInpAddAvatar] = useState("")
-    let [inpAddDes, setInpAddDes] = useState("")
-    let [inpAddGroup, setInpAddGroup] = useState("")
-    let [inpAddSum, setInpAddSum] = useState("")
+
     let [search, setSearch] = useState("")
+
+    const [selectedNumber, setSelectedNumber] = useState("");
+    const [selectedUser, setSelectedUser] = useState("");
+    const [selectedGroup, setSelectedGroup] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState("");
+    const [selectedDate, setSelectedDate] = useState("");
+    const [selectedAmount, setSelectedAmount] = useState("");
+
 
 
     const today = new Date();
     const options = { year: "numeric", month: "long", day: "numeric" };
     const formattedDate = today.toLocaleDateString("ru-RU", options);
 
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
 
     let API = "https://685a9abb9f6ef96111571888.mockapi.io/Frontent"
 
@@ -63,118 +55,82 @@ export default function Crud() {
             console.log(error);
         }
     }
- 
-
-    async function addNewUser() {
-        let newUser = {
-            name: inpAddName,
-            avatar: inpAddAvatar,
-            des: inpAddDes,
-            group: inpAddGroup,
-            age: inpAddAge,
-            sumOplat: inpAddSum,
-            id: Date.now(),
-        }
-        try {
-            await axios.post(API, newUser)
-            get()
-            setIsModalOpen(false)
-        } catch (error) {
-            console.log(error);
-        }
 
 
-    }
+    
 
-
-
-    const filteredData = data.filter((e) =>
-        e.name.toLowerCase().includes(search.toLowerCase())
-
-    );
-
+    const filteredData = data
+        .filter(e => e.name.toLowerCase().includes(search.toLowerCase()))
+        .filter(e => !selectedUser || e.name === selectedUser)
+        .filter(e => !selectedGroup || e.group === selectedGroup)
+        .filter(e => !selectedStatus || String(e.status) === selectedStatus)
+        .filter(e => !selectedDate || e.date === selectedDate)
+        .filter(e => !selectedAmount || String(e.sumOplat) === selectedAmount);
 
 
     return (<>
         <div className="flex w-[90%] m-auto justify-between">
             <TextField id="outlined-basic" label="Search" variant="outlined" value={search} onChange={(e) => setSearch(e.target.value)} />
-            <button onClick={showModal} className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-7 rounded-lg shadow-md transition duration-400 ease-in-out"> Add User</button>
+                <Link to={'/addPage'}>
+            <button  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-7 rounded-lg shadow-md transition duration-400 ease-in-out"> Add User</button>
+                </Link>
 
         </div>
-        <Modal
-            title="Add New User"
-            closable={{ 'aria-label': 'Custom Close Button' }}
-            open={isModalOpen}
-            onOk={addNewUser}
-            onCancel={handleCancel}
-        >
-
-            <div className="flex flex-wrap gap-[20px]">
-
-                <TextField id="outlined-basic" label="AddName" variant="outlined" value={inpAddName} onChange={(e) => setInpAddName(e.target.value)} />
-                {/* <input type="text" value={inpAddName} onChange={(e) => setInpAddName(e.target.value)} /> */}
-                <TextField id="outlined-basic" label="AddAvatar" variant="outlined" value={inpAddAvatar} onChange={(e) => setInpAddAvatar(e.target.value)} />
-                {/* <input type="text" value={inpAddAvatar} onChange={(e) => setInpAddAvatar(e.target.value)} /> */}
-                <TextField id="outlined-basic" label="AddDes" variant="outlined" value={inpAddDes} onChange={(e) => setInpAddDes(e.target.value)} />
-                {/* <input type="text" value={inpAddDes} onChange={(e) => setInpAddDes(e.target.value)} /> */}
-                <TextField id="outlined-basic" label="AddSum" variant="outlined" value={inpAddSum} onChange={(e) => setInpAddSum(e.target.value)} />
-                {/* <input type="text" value={inpAddSum} onChange={(e) => setInpAddSum(e.target.value)} /> */}
-                <TextField id="outlined-basic" label="AddAge" variant="outlined" value={inpAddAge} onChange={(e) => setInpAddAge(e.target.value)} />
-                {/* <input type="text" value={inpAddAge} onChange={(e) => setInpAddAge(e.target.value)} /> */}
-                <TextField id="outlined-basic" label="AddGroup" variant="outlined" value={inpAddGroup} onChange={(e) => setInpAddGroup(e.target.value)} />
-                {/* <input type="text" value={inpAddGroup} onChange={(e) => setInpAddGroup(e.target.value)} /> */}
-            </div>
-
-        </Modal>
+      
 
         <table className=" bg-white w-[96%] mt-[100px] m-auto shadow-md rounded-xl overflow-hidden">
 
 
+         
+
             <thead className="bg-gray-100 text-gray-700">
                 <tr>
                     <th className="px-4 py-3">
-                        <h1 className="transition duration-200 hover:bg-purple-500 hover:text-white px-2 py-1 rounded-md cursor-pointer inline-block">
-                            №
-                        </h1>
+                    <h1>№</h1>
                     </th>
 
                     <th className="px-4 py-3 text-center">
-                        <h1 className="transition duration-200 hover:bg-blue-500 hover:text-white px-2 py-1 rounded-md cursor-pointer inline-block">
-                            User
-                        </h1>
+                  <h1>User</h1>
                     </th>
 
                     <th className="px-4 py-3">
-                        <h1 className="transition duration-200 hover:bg-green-500 hover:text-white px-2 py-1 rounded-md cursor-pointer inline-block">
-                            Group
-                        </h1>
+                        <select
+                            className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400 transition duration-200 hover:border-gray-400"
+                            value={selectedGroup}
+                            onChange={(e) => setSelectedGroup(e.target.value)}
+                        >
+                            <option value="">Group</option>
+                            {Array.from(new Set(filteredData.map(u => u.group))).map(group => (
+                                <option key={group} value={group}>{group}</option>
+                            ))}
+                        </select>
                     </th>
 
                     <th className="px-4 py-3">
-                        <h1 className="transition duration-200 hover:bg-yellow-500 hover:text-white px-2 py-1 rounded-md cursor-pointer inline-block">
-                            Status
-                        </h1>
+                        <select
+                            className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition duration-200 hover:border-gray-400"
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(e.target.value)}
+                        >
+                            <option value="">Status</option>
+                            <option value="true">Active</option>
+                            <option value="false">Inactive</option>
+                        </select>
                     </th>
 
                     <th className="px-4 py-3">
-                        <h1 className="transition duration-200 hover:bg-orange-500 hover:text-white px-2 py-1 rounded-md cursor-pointer inline-block">
-                            Date of Payment
-                        </h1>
+                    <h1>Date of Payment</h1>
                     </th>
 
                     <th className="px-4 py-3">
-                        <h1 className="transition duration-200 hover:bg-rose-500 hover:text-white px-2 py-1 rounded-md cursor-pointer inline-block">
-                            Amount
-                        </h1>
+                      <h1>Amount</h1>
                     </th>
 
-                    <th className="px-4 py-3">
-                        <h1 className="transition duration-200 hover:bg-gray-600 hover:text-white px-2 py-1 rounded-md cursor-pointer inline-block">
-                            Actions
-                        </h1>
-                    </th>
+                    <th className="px-4 py-3">Actions</th>
                 </tr>
             </thead>
+
+
 
             <tbody className="divide-y divide-gray-200">
                 {filteredData.map((e, i) => (
@@ -201,7 +157,7 @@ export default function Crud() {
                             <div className="flex gap-2">
                                 <button onClick={() => deleteUser(e.id)} className="bg-red-100 text-red-500 px-2 py-1 rounded hover:bg-red-200" title="Delete">🗑️</button>
                                 <Link to={`/edit/${e.id}`}>
-                                <button className="bg-blue-100 text-blue-500 px-2 py-1 rounded hover:bg-blue-200" title="Edit">🖊️</button>
+                                    <button className="bg-blue-100 text-blue-500 px-2 py-1 rounded hover:bg-blue-200" title="Edit">🖊️</button>
                                 </Link>
                             </div>
                         </td>
@@ -209,11 +165,6 @@ export default function Crud() {
                 ))}
             </tbody>
         </table>
-
-
-
-
-
 
     </>)
 }
