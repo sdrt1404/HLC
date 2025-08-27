@@ -46,13 +46,13 @@ export default function AddPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6 w-[50%] m-auto mt-[50px] bg-white p-6 rounded-2xl shadow-lg">
+    <div className="flex flex-col gap-6 lg:w-[50%] m-auto mt-[50px] bg-white p-6 rounded-2xl shadow-lg">
       <h1 className="text-2xl font-semibold text-center text-gray-800">➕ Add New User</h1>
 
       <TextField label="Full Name" variant="outlined" value={inpAddName} onChange={(e) => setInpAddName(e.target.value)} />
 
       {/* Кастомный file input */}
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex lg:flex-col flex-row items-center gap-3">
         {inpAddAvatar ? (
           <img
             src={inpAddAvatar}

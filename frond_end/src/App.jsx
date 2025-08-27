@@ -12,27 +12,27 @@ import AddPage from "./pajes/addPage/addPage";
 
 
 export default function App() {
-  
 
 
 
-  return(<>
-  
-  
-  <Routes>
-    <Route path="/" element={<Layout/>}>
-      <Route index  element={<Home/>}/>
-      <Route path="login" element={<Login/>}/>
-      <Route path="debtor" element={<Debtor/>}/>
-      <Route path="crud" element={<Crud/>}/>
-      <Route path="addPage" element={<AddPage/>}/>
-      {/* <Route path="edit/:id" element={<EditPage/>}/> */}
 
-<Route path="/edit/:id" element={<EditPage />} />
-    </Route>
-  </Routes>
+  return (<>
 
-{/* 
+
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="home" element={<Home />} />
+        <Route index element={<Login />} />
+        <Route path="debtor" element={<Debtor />} />
+        <Route path="crud" element={<Crud />} />
+        <Route path="addPage" element={<AddPage />} />
+        {/* <Route path="edit/:id" element={<EditPage/>}/> */}
+
+        <Route path="/edit/:id" element={<EditPage />} />
+      </Route>
+    </Routes>
+
+    {/* 
   <Routes>
     <Route path="/" element={<ProtectedLayout/>}>
       <Route index element={<Login/>}/>

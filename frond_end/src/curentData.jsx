@@ -7,8 +7,8 @@ export default function CurrentDate() {
 
   return (
     <div className="flex text-[30px]">
-      <h1 className="font-black">дата: </h1>
-      <p className="font-bold">{formattedDate}</p>
+      <h1 className="font-bold">дата : </h1>
+      <p className="font-bold"> {"   "}{formattedDate}</p>
     </div>
   );
 }

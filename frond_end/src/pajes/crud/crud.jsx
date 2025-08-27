@@ -3,12 +3,11 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button, Modal } from 'antd';
+
 import TextField from '@mui/material/TextField';
 import { Link } from "react-router-dom";
 
 export default function Crud() {
-
 
 
     let [search, setSearch] = useState("")
@@ -25,7 +24,6 @@ export default function Crud() {
     const today = new Date();
     const options = { year: "numeric", month: "long", day: "numeric" };
     const formattedDate = today.toLocaleDateString("ru-RU", options);
-
 
 
     let API = "https://685a9abb9f6ef96111571888.mockapi.io/Frontent"
@@ -57,7 +55,7 @@ export default function Crud() {
     }
 
 
-    
+
 
     const filteredData = data
         .filter(e => e.name.toLowerCase().includes(search.toLowerCase()))
